@@ -1,0 +1,46 @@
+#import necessary libs
+import pandas as pd
+from collections import Counter
+import matplotlib as plt
+
+#set print parameter
+pd.set_option('display.max_columns', 1000)
+pd.set_option('display.width', 1000)
+pd.set_option('display.max_colwidth', 1000)
+
+# set this so the
+# %matplotlib inline
+
+
+#read the dataset
+url = 'https://raw.githubusercontent.com/justmarkham/DAT8/master/data/chipotle.tsv'
+chipo = pd.read_csv(url, sep='\t')
+
+
+
+print(chipo.head(5))
+
+
+
+# get the Series of the names
+x = chipo.item_name
+
+# use the Counter class from collections to create a dictionary with keys(text) and frequency
+letter_counts = Counter(x)
+
+# convert the dictionary to a DataFrame
+df = pd.DataFrame.from_dict(letter_counts, orient='index')
+
+# sort the values from the top to the least value and slice the first 5 items
+df = df[0].sort_values(ascending = True)[45:50]
+
+# create the plot
+df.plot(kind='bar')
+
+# Set the title and labels
+plt.xlabel('Items')
+plt.ylabel('Price')
+plt.title('Most ordered Chipotle\'s Items')
+
+# show the plot
+plt.show()
